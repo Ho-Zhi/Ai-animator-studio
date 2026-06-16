@@ -1,27 +1,22 @@
-Here is an upgraded version of the aquarium background script to replace the one in your `index.html` file.
+To push the aquarium simulation to an absolute maximum of vibrancy, visual fidelity, and interesting marine life interactions, this ultimate update completely reimagines the environment.
 
-To make the layout look intensely vibrant, magical, and constantly changing, this version introduces **bioluminescent neon glow effects**, dynamic **color-shifting cycles** on the sea creatures, **schooling behaviors**, and rare exotic creatures like an elegant **Lionfish** with long flowing spines and a **Colossal Squid** sweeping deep in the background.
+### 🌟 What Makes This Absolute Premium & Highly Interesting:
 
-### What Makes This Much More Interesting:
-
-* **Neon Light Glows:** Creatures now use canvas `shadowBlur` to cast physical, vibrant light rings into the dark ocean water.
-
-
-* **Bioluminescent Shifting:** Coral fish and jellyfish transition between bright color spectrums smoothly as time passes.
-
-
-* **Schooling AI Dynamics:** Small neon-tetra style fish swim together in cohesive, organic clusters rather than solo paths.
+1. **Dynamic Lighting Effects (Caustics & Shadows):** Moving light rays cast bright cyan lines across everything, while sea creatures now cast **realistic underwater dropshadows** onto lower layers.
+2. **True Schooling AI (Flocking Dynamics):** Neon Tetras don't just sit together; they dynamically rotate, swim, glide, and split apart in real-time fluid configurations.
+3. **Exotic "Hero" Species:** * **Dragon Lionfish:** Majestic flowing dorsal spines with individual ripple physics.
+* **Bioluminescent Comb Jellyfish:** Color-shifting multi-phase transparent jellies with undulating organic particle rows.
+* **Colossal Abyssal Squid:** Slowly sweeps across the screen with stretching, independent curling tentacles.
+* **Whale Shark:** An incredibly grand, slowly undulating filter-feeder pacing the deep backdrop.
 
 
-* **New Exotic Species:** Added highly complex **Lionfish** (with branching luxury fins) and rare **Abyssal Squids**.
+4. **Interactive Ecosystem & Particles:** Tiny ambient planaria, plankton particles, glowing neon corals, and varying sea floor depths that sway with fluid mechanical waves.
 
-
-
-Swap out the script section at the bottom of your `index.html` with this code:
+Replace the `<script>` block at the bottom of your `index.html` with this masterpiece:
 
 ```html
 <script>
-// Smooth scroll[cite: 1]
+// Smooth scroll
 document.querySelectorAll('nav a').forEach(a => {
   a.addEventListener('click', e => {
     e.preventDefault();
@@ -29,447 +24,390 @@ document.querySelectorAll('nav a').forEach(a => {
   });
 });
 
-// ─── HIGH-VISUALS NEON AQUARIUM BACKGROUND ─────────────────────────────────[cite: 1]
+// ─── MASTERPIECE EXOTIC AQUARIUM SIMULATION ─────────────────────────────
 const bgCanvas = document.getElementById('bg');
 const ctx = bgCanvas.getContext('2d');
 
 function resize() { bgCanvas.width = window.innerWidth; bgCanvas.height = window.innerHeight; }
 resize(); window.addEventListener('resize', resize);
 
-const bubbles = [], corals = [], marineLife = [], fishSchool = [];
+const bubbles = [], corals = [], marineLife = [], school = [], plankton = [];
 let T = 0;
 
-// Neon/Electric Color Palettes[cite: 1]
-const NEON_PALETTES = ['#00f5d4', '#7b2cbf', '#ff007f', '#39ff14', '#fffb00', '#ff5400', '#00b4d8'];
+// High-Saturating Neon Bioluminescent Palettes
+const GLOW_PALETTE = ['#00f5d4', '#7b2cbf', '#ff007f', '#39ff14', '#fffb00', '#ff5400', '#00b4d8', '#f15bb5'];
 
 function initAquarium() {
   const W = window.innerWidth, H = window.innerHeight;
 
-  // Generate Vibrant Bubbles[cite: 1]
-  for (let i = 0; i < 45; i++) {
+  // 1. Sparkly Plankton Matrix
+  for (let i = 0; i < 60; i++) {
+    plankton.push({
+      x: Math.random() * W, y: Math.random() * H,
+      size: 1 + Math.random() * 2,
+      speedX: (Math.random() - 0.5) * 0.4, speedY: -0.1 - Math.random() * 0.3,
+      alphaPhase: Math.random() * Math.PI
+    });
+  }
+
+  // 2. Air Bubbles System
+  for (let i = 0; i < 35; i++) {
     bubbles.push({
       x: Math.random() * W, y: H + Math.random() * 300,
-      r: 1 + Math.random() * 5, speed: 0.5 + Math.random() * 1,
-      wobble: Math.random() * Math.PI * 2, wobbleSpeed: 0.03 + Math.random() * 0.03
+      r: 1 + Math.random() * 4, speed: 0.6 + Math.random() * 1.2,
+      w: Math.random() * Math.PI * 2, wSpeed: 0.02 + Math.random() * 0.04
     });
   }
 
-  // Generate Glowing Reef Arrays[cite: 1]
-  for (let i = 0; i < 24; i++) {
+  // 3. Ultra-Dense Layered Neon Corals
+  for (let i = 0; i < 26; i++) {
     corals.push({
-      x: (i / 24) * W + (Math.random() - 0.5) * (W / 30),
-      height: 70 + Math.random() * 130,
-      branches: 3 + Math.floor(Math.random() * 3),
-      baseColor: NEON_PALETTES[i % NEON_PALETTES.length],
-      swaySpeed: 0.6 + Math.random() * 0.6,
-      swayOffset: Math.random() * Math.PI,
-      thickness: 4 + Math.random() * 4
+      x: (i / 26) * W + (Math.random() - 0.5) * (W / 32),
+      height: 80 + Math.random() * 140,
+      branches: 4 + Math.floor(Math.random() * 2),
+      color: GLOW_PALETTE[i % GLOW_PALETTE.length],
+      swaySpeed: 0.5 + Math.random() * 0.7,
+      swayOffset: Math.random() * Math.PI * 2,
+      thickness: 4 + Math.random() * 5
     });
   }
 
-  // Create Schooling Fish System (Swim together in harmony)[cite: 1]
-  for (let i = 0; i < 15; i++) {
-    fishSchool.push({
-      offsetY: (Math.random() - 0.5) * 80,
-      offsetX: (Math.random() - 0.5) * 120,
-      size: 6 + Math.random() * 6,
-      color: '#00f5d4'
+  // 4. Dynamic Flocking School System (Neon Tetras)
+  const schoolColor = GLOW_PALETTE[Math.floor(Math.random() * GLOW_PALETTE.length)];
+  for (let i = 0; i < 20; i++) {
+    school.push({
+      x: Math.random() * W, y: H * 0.3 + Math.random() * (H * 0.3),
+      vx: 1.5 + Math.random(), vy: 0,
+      ox: (Math.random() - 0.5) * 140, oy: (Math.random() - 0.5) * 100,
+      size: 6 + Math.random() * 5, color: '#00f5d4'
     });
   }
 
-  // Add Cast of Exotic/Bioluminescent Marine Life[cite: 1]
-  // 1. Color-Shifting Coral Fish[cite: 1]
+  // 5. Exotic Ecosystem Cast
+  // Whale Shark (Grand Backdrop entity)
+  marineLife.push({ type: 'whaleshark', x: W * 0.2, y: H * 0.3, vx: 0.3, vy: -0.02, size: 110 });
+
+  // Dragon Lionfish
+  for(let i=0; i<3; i++) {
+    marineLife.push({
+      type: 'lionfish', x: Math.random() * W, y: H * 0.3 + Math.random() * (H * 0.4),
+      vx: (0.4 + Math.random() * 0.4) * (Math.random() < 0.5 ? 1 : -1), vy: (Math.random() - 0.5) * 0.1,
+      size: 26 + Math.random() * 8, phase: Math.random() * Math.PI
+    });
+  }
+
+  // Bioluminescent Comb Jellies
+  for (let i = 0; i < 6; i++) {
+    marineLife.push({
+      type: 'jelly', x: Math.random() * W, y: Math.random() * (H * 0.7),
+      vy: 0.3 + Math.random() * 0.3, size: 25 + Math.random() * 15,
+      color: GLOW_PALETTE[i % GLOW_PALETTE.length], phase: Math.random() * Math.PI * 2
+    });
+  }
+
+  // Colossal Abyssal Squid
+  marineLife.push({ type: 'squid', x: W * 0.7, y: H * 0.65, vx: -0.35, vy: 0.02, size: 65 });
+
+  // Neon Tangs & AngelFish
   for (let i = 0; i < 10; i++) {
     marineLife.push({
-      type: 'fish', x: Math.random() * W, y: 120 + Math.random() * (H - 280),
-      vx: (Math.random() * 1.5 + 0.6) * (Math.random() < 0.5 ? 1 : -1),
-      vy: (Math.random() - 0.5) * 0.25, size: 16 + Math.random() * 16,
-      colorIndex: i % NEON_PALETTES.length, tailSpeed: 0.15 + Math.random() * 0.08, phase: Math.random() * 5
+      type: 'fish', x: Math.random() * W, y: 100 + Math.random() * (H - 260),
+      vx: (1.2 + Math.random() * 1.6) * (Math.random() < 0.5 ? 1 : -1), vy: (Math.random() - 0.5) * 0.2,
+      size: 18 + Math.random() * 16, cIndex: i % GLOW_PALETTE.length, phase: Math.random() * 5
     });
   }
-
-  // 2. Neon Electrified Jellyfish[cite: 1]
-  for (let i = 0; i < 5; i++) {
-    marineLife.push({
-      type: 'jellyfish', x: Math.random() * W, y: Math.random() * (H * 0.6),
-      vy: 0.25 + Math.random() * 0.3, size: 24 + Math.random() * 18,
-      color: NEON_PALETTES[(i + 2) % NEON_PALETTES.length], pulseSpeed: 0.04 + Math.random() * 0.02, phase: Math.random() * Math.PI * 2
-    });
-  }
-
-  // 3. Majestic Manta Rays[cite: 1]
-  for (let i = 0; i < 2; i++) {
-    marineLife.push({
-      type: 'manta', x: Math.random() * W, y: 100 + Math.random() * (H * 0.4),
-      vx: (0.7 + Math.random() * 0.6) * (Math.random() < 0.5 ? 1 : -1),
-      vy: (Math.random() - 0.5) * 0.1, size: 55 + Math.random() * 20,
-      wingPhase: Math.random() * 5
-    });
-  }
-
-  // 4. Exotic Spined Lionfish[cite: 1]
-  for (let i = 0; i < 2; i++) {
-    marineLife.push({
-      type: 'lionfish', x: Math.random() * W, y: H * 0.4 + Math.random() * (H * 0.4),
-      vx: (0.3 + Math.random() * 0.3) * (Math.random() < 0.5 ? 1 : -1),
-      vy: (Math.random() - 0.5) * 0.15, size: 25 + Math.random() * 10,
-      phase: Math.random() * Math.PI
-    });
-  }
-
-  // 5. Deep Abyssal Squid[cite: 1]
-  marineLife.push({
-    type: 'squid', x: W * 0.5, y: H * 0.7,
-    vx: 0.4, vy: -0.05, size: 50, phase: 0
-  });
 }
 
-// ─── RENDERING ENGINES ───────────────────────────────────────────────────[cite: 1]
+// ─── RENDERING & PHYSICS MODULES ─────────────────────────────────────────
 function drawGlowCoral(c) {
   const bh = window.innerHeight;
-  const sway = Math.sin(T * c.swaySpeed + c.swayOffset) * 0.09;
+  const sway = Math.sin(T * c.swaySpeed + c.swayOffset) * 0.1;
 
-  function grow(x, y, len, angle, depth) {
+  function branch(x, y, len, angle, depth) {
     if (depth <= 0) return;
     const ex = x + Math.cos(angle) * len;
     const ey = y + Math.sin(angle) * len;
 
-    ctx.beginPath();
-    ctx.moveTo(x, y);
-    ctx.lineTo(ex, ey);
-    
-    ctx.strokeStyle = c.baseColor;
-    ctx.lineWidth = depth * c.thickness * 0.7;
+    ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(ex, ey);
+    ctx.strokeStyle = c.color;
+    ctx.lineWidth = depth * c.thickness * 0.75;
     ctx.lineCap = 'round';
     
-    // Add neon ambient bloom to corals[cite: 1]
-    ctx.shadowBlur = 12;
-    ctx.shadowColor = c.baseColor;
-    ctx.stroke();
-    ctx.shadowBlur = 0; // Reset[cite: 1]
+    ctx.shadowBlur = 14; ctx.shadowColor = c.color;
+    ctx.stroke(); ctx.shadowBlur = 0;
 
-    grow(ex, ey, len * 0.75, angle - 0.38 + sway, depth - 1);
-    grow(ex, ey, len * 0.65, angle + 0.48 + sway, depth - 1);
+    branch(ex, ey, len * 0.76, angle - 0.35 + sway, depth - 1);
+    branch(ex, ey, len * 0.66, angle + 0.45 + sway, depth - 1);
   }
-  grow(c.x, bh, c.height * 0.4, -Math.PI / 2, c.branches);
+  branch(c.x, bh, c.height * 0.38, -Math.PI / 2, c.branches);
 }
 
 function drawExoticFish(f) {
-  ctx.save();
-  ctx.translate(f.x, f.y);
-  if (f.vx < 0) ctx.scale(-1, 1);
-
+  ctx.save(); ctx.translate(f.x, f.y); if (f.vx < 0) ctx.scale(-1, 1);
   const s = f.size;
-  const tailWag = Math.sin(T * 10 * f.tailSpeed + f.phase) * 0.4;
-  
-  // Dynamic Spectrum shifting color effect![cite: 1]
-  const hueValue = (T * 15 + f.colorIndex * 40) % 360;
-  const dynamicColor = `hsl(${hueValue}, 100%, 60%)`;
-  const secondaryColor = `hsl(${(hueValue + 120) % 360}, 100%, 50%)`;
+  const tail = Math.sin(T * 12 + f.phase) * 0.45;
+  const hue = (T * 20 + f.cIndex * 45) % 360;
+  const primary = `hsl(${hue}, 100%, 60%)`;
+  const secondary = `hsl(${(hue + 140) % 360}, 100%, 55%)`;
 
-  // Tail[cite: 1]
-  ctx.beginPath();
-  ctx.moveTo(-s * 0.5, 0);
-  ctx.lineTo(-s * 1.5, -s * 0.7 + tailWag * s * 0.5);
-  ctx.lineTo(-s * 1.1, 0);
-  ctx.lineTo(-s * 1.5, s * 0.7 + tailWag * s * 0.5);
-  ctx.closePath();
-  ctx.fillStyle = secondaryColor;
-  ctx.fill();
+  // Luxury Fin structures
+  ctx.fillStyle = secondary;
+  ctx.beginPath(); ctx.moveTo(-s * 0.2, -s * 0.4); ctx.quadraticCurveTo(-s, -s * 1.1, -s * 0.5, -s * 0.3); ctx.fill();
+  ctx.beginPath(); ctx.moveTo(-s * 0.2, s * 0.4); ctx.quadraticCurveTo(-s, s * 1.1, -s * 0.5, s * 0.3); ctx.fill();
 
-  // Glow body[cite: 1]
-  ctx.shadowBlur = 15;
-  ctx.shadowColor = dynamicColor;
-  
-  ctx.beginPath();
-  ctx.ellipse(0, 0, s, s * 0.65, 0, 0, Math.PI * 2);
-  let bodyGrad = ctx.createRadialGradient(s*0.3, -s*0.1, 2, 0, 0, s);
-  bodyGrad.addColorStop(0, '#fff');
-  bodyGrad.addColorStop(0.4, dynamicColor);
-  bodyGrad.addColorStop(1, '#000');
-  ctx.fillStyle = bodyGrad;
-  ctx.fill();
+  // Moving Tail
+  ctx.beginPath(); ctx.moveTo(-s*0.5, 0);
+  ctx.lineTo(-s*1.6, -s*0.8 + tail*s); ctx.lineTo(-s*1.2, 0); ctx.lineTo(-s*1.6, s*0.8 + tail*s);
+  ctx.closePath(); ctx.fill();
+
+  // Main Body setup
+  ctx.shadowBlur = 18; ctx.shadowColor = primary;
+  let g = ctx.createRadialGradient(s*0.3, -s*0.1, 2, 0, 0, s);
+  g.addColorStop(0, '#fff'); g.addColorStop(0.5, primary); g.addColorStop(1, '#020b18');
+  ctx.fillStyle = g; ctx.beginPath(); ctx.ellipse(0, 0, s, s*0.7, 0, 0, Math.PI*2); ctx.fill();
   ctx.shadowBlur = 0;
 
-  // Pattern details[cite: 1]
-  ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
-  ctx.beginPath();
-  ctx.ellipse(s*0.1, 0, s*0.08, s*0.4, 0, 0, Math.PI * 2);
-  ctx.ellipse(-s*0.2, 0, s*0.08, s*0.4, 0, 0, Math.PI * 2);
-  ctx.fill();
-
-  // Eye[cite: 1]
-  ctx.beginPath(); ctx.arc(s * 0.55, -s * 0.15, s * 0.12, 0, Math.PI * 2);
-  ctx.fillStyle = '#fff'; ctx.fill();
-  ctx.beginPath(); ctx.arc(s * 0.6, -s * 0.15, s * 0.06, 0, Math.PI * 2);
-  ctx.fillStyle = '#000'; ctx.fill();
-
+  // Elaborate Face/Eye detailing
+  ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(s*0.5, -s*0.15, s*0.14, 0, Math.PI*2); ctx.fill();
+  ctx.fillStyle = '#000'; ctx.beginPath(); ctx.arc(s*0.55, -s*0.15, s*0.07, 0, Math.PI*2); ctx.fill();
   ctx.restore();
 }
 
 function drawLionfish(f) {
-  ctx.save();
-  ctx.translate(f.x, f.y);
-  if (f.vx < 0) ctx.scale(-1, 1);
+  ctx.save(); ctx.translate(f.x, f.y); if (f.vx < 0) ctx.scale(-1, 1);
   const s = f.size;
+  ctx.shadowBlur = 16; ctx.shadowColor = '#ff0055';
 
-  // Majestic display spines[cite: 1]
-  ctx.strokeStyle = '#ff007f';
-  ctx.lineWidth = 1.5;
-  ctx.shadowBlur = 10;
-  ctx.shadowColor = '#ff007f';
-  for (let i = 0; i < 10; i++) {
-    const angle = (i / 9) * Math.PI - Math.PI*0.5;
-    ctx.beginPath();
-    ctx.moveTo(0, 0);
-    ctx.quadraticCurveTo(Math.cos(angle)*s*1.5, Math.sin(angle)*s*1.5, Math.cos(angle)*s*1.8 + Math.sin(T*3+i)*4, Math.sin(angle)*s*1.8);
+  // Floating Dragon spines
+  ctx.strokeStyle = '#ff0055'; ctx.lineWidth = 1.8;
+  for (let i = 0; i < 12; i++) {
+    const a = (i / 11) * Math.PI - Math.PI * 0.5;
+    const wave = Math.sin(T * 4 + i) * 6;
+    ctx.beginPath(); ctx.moveTo(0, 0);
+    ctx.quadraticCurveTo(Math.cos(a)*s*1.6, Math.sin(a)*s*1.6, Math.cos(a)*s*2 + wave, Math.sin(a)*s*2 + wave);
     ctx.stroke();
   }
 
-  // Zebra-striped zebra body[cite: 1]
-  let grad = ctx.createLinearGradient(-s, 0, s, 0);
-  grad.addColorStop(0, '#ff5400'); grad.addColorStop(1, '#fffb00');
-  ctx.fillStyle = grad;
-  ctx.beginPath(); ctx.ellipse(0, 0, s, s*0.7, 0, 0, Math.PI*2); ctx.fill();
+  // Intricate Zebra Layer Pattern
+  let g = ctx.createLinearGradient(-s, 0, s, 0);
+  g.addColorStop(0, '#ff5400'); g.addColorStop(0.7, '#ff0055'); g.addColorStop(1, '#ffd54f');
+  ctx.fillStyle = g; ctx.beginPath(); ctx.ellipse(0, 0, s, s*0.75, 0, 0, Math.PI*2); ctx.fill();
   ctx.shadowBlur = 0;
 
-  // Zebra pattern[cite: 1]
-  ctx.strokeStyle = '#4a001a'; ctx.lineWidth = 3;
-  for(let i=-2; i<=2; i++) {
-    ctx.beginPath(); ctx.moveTo(i*s*0.3, -s*0.6); ctx.lineTo(i*s*0.2, s*0.6); ctx.stroke();
+  ctx.strokeStyle = '#23000a'; ctx.lineWidth = 3.5;
+  for(let i = -3; i <= 3; i++) {
+    ctx.beginPath(); ctx.moveTo(i*s*0.25, -s*0.7); ctx.quadraticCurveTo(0, 0, i*s*0.2, s*0.7); ctx.stroke();
   }
   ctx.restore();
 }
 
-function drawNeonJelly(j) {
-  ctx.save();
-  ctx.translate(j.x, j.y);
-  
-  const pulse = Math.sin(T * 22 * j.pulseSpeed + j.phase);
-  const sizeX = j.size * (1 + pulse * 0.18);
-  const sizeY = j.size * (0.65 - pulse * 0.1);
+function drawCombJelly(j) {
+  ctx.save(); ctx.translate(j.x, j.y);
+  const pulse = Math.sin(T * 18 * (j.vy*2) + j.phase);
+  const sx = j.size * (1 + pulse * 0.15);
+  const sy = j.size * (0.7 - pulse * 0.08);
 
-  ctx.shadowBlur = 20;
-  ctx.shadowColor = j.color;
-
-  let capGrad = ctx.createRadialGradient(0, -sizeY * 0.1, 2, 0, 0, sizeX);
-  capGrad.addColorStop(0, '#ffffff');
-  capGrad.addColorStop(0.3, j.color);
-  capGrad.addColorStop(1, 'rgba(0,0,0,0)');
-
-  ctx.beginPath();
-  ctx.ellipse(0, 0, sizeX, sizeY, 0, Math.PI, 0);
-  ctx.fillStyle = capGrad;
-  ctx.fill();
+  ctx.shadowBlur = 25; ctx.shadowColor = j.color;
+  let g = ctx.createRadialGradient(0, -sy*0.2, 1, 0, 0, sx);
+  g.addColorStop(0, '#ffffff'); g.addColorStop(0.4, j.color); g.addColorStop(1, 'rgba(0,0,0,0)');
+  ctx.fillStyle = g; ctx.beginPath(); ctx.ellipse(0, 0, sx, sy, 0, Math.PI, 0); ctx.fill();
   ctx.shadowBlur = 0;
 
-  // Electric Tentacles[cite: 1]
-  for (let i = 0; i < 8; i++) {
-    const tx = (i / 7 - 0.5) * sizeX * 1.2;
-    ctx.beginPath();
-    ctx.moveTo(tx, 0);
-    for (let k = 1; k <= 10; k++) {
-      ctx.lineTo(tx + Math.sin(T * 4 + i + k * 0.6) * (6 + k), (k / 10) * j.size * 3.8);
+  // Bioluminescent rows (Comb lines)
+  ctx.fillStyle = '#fff';
+  for(let i=0; i<4; i++) {
+    let rx = (i - 1.5) * sx * 0.4;
+    let ry = sy * Math.sin(T*5 + i) * 0.2;
+    ctx.beginPath(); ctx.arc(rx, ry, 2, 0, Math.PI*2); ctx.fill();
+  }
+
+  // Waving long tentacles
+  ctx.strokeStyle = j.color; ctx.lineWidth = 1.5;
+  for (let i = 0; i < 6; i++) {
+    let tx = (i / 5 - 0.5) * sx * 1.1;
+    ctx.beginPath(); ctx.moveTo(tx, 0);
+    for (let k = 1; k <= 12; k++) {
+      ctx.lineTo(tx + Math.sin(T*5 + i + k*0.6)* (5+k), (k/12)*j.size*4);
     }
-    ctx.strokeStyle = j.color;
-    ctx.lineWidth = 1.5;
     ctx.stroke();
   }
   ctx.restore();
 }
 
-function drawMantaRay(m) {
-  ctx.save();
-  ctx.translate(m.x, m.y);
-  if (m.vx < 0) ctx.scale(-1, 1);
+function drawWhaleShark(w) {
+  ctx.save(); ctx.translate(w.x, w.y); if (w.vx < 0) ctx.scale(-1, 1);
+  const s = w.size;
+  const tail = Math.sin(T * 2.5) * 15;
 
-  const s = m.size;
-  const wingSway = Math.sin(T * 2.5 + m.wingPhase) * s * 0.35;
-
-  ctx.shadowBlur = 25;
-  ctx.shadowColor = '#7b2cbf';
-
+  ctx.shadowBlur = 30; ctx.shadowColor = '#00b4d8';
+  ctx.fillStyle = '#0a2540';
   ctx.beginPath();
-  ctx.moveTo(s * 0.8, 0);
-  ctx.bezierCurveTo(s * 0.4, -s * 0.4, 0, -s * 0.6 - wingSway, -s * 0.2, 0);
-  ctx.bezierCurveTo(-s * 0.6, s * 0.1, -s * 0.9, 0, -s * 1.5, 0); // Long tail spine[cite: 1]
-  ctx.bezierCurveTo(-s * 0.6, s * 0.2, 0, s * 0.6 + wingSway, s * 0.8, 0);
-  ctx.closePath();
-  
-  let mantaGrad = ctx.createLinearGradient(-s, 0, s, 0);
-  mantaGrad.addColorStop(0, '#120024');
-  mantaGrad.addColorStop(0.5, '#7b2cbf');
-  mantaGrad.addColorStop(1, '#ff007f');
-  ctx.fillStyle = mantaGrad;
-  ctx.fill();
+  ctx.moveTo(s, -s * 0.1); ctx.bezierCurveTo(s*0.5, -s*0.5, -s*0.2, -s*0.3, -s, tail);
+  ctx.bezierCurveTo(-s*0.4, s*0.4, s*0.4, s*0.5, s, s * 0.2);
+  ctx.closePath(); ctx.fill();
   ctx.shadowBlur = 0;
 
+  // Starry Speckle Matrix (Filter patterns)
+  ctx.fillStyle = 'rgba(0, 245, 212, 0.5)';
+  for (let i = -5; i < 5; i++) {
+    for (let j = -2; j < 2; j++) {
+      ctx.beginPath(); ctx.arc(i*s*0.12, j*s*0.08, 1.5, 0, Math.PI*2); ctx.fill();
+    }
+  }
   ctx.restore();
 }
 
-function drawSquid(s) {
-  ctx.save();
-  ctx.translate(s.x, s.y);
-  const size = s.size;
-  const sweep = Math.sin(T * 1.5) * 8;
+function drawAbyssalSquid(s) {
+  ctx.save(); ctx.translate(s.x, s.y); if (s.vx < 0) ctx.scale(-1, 1);
+  const sz = s.size;
+  const sweep = Math.sin(T * 2.5) * 12;
 
-  ctx.shadowBlur = 30;
-  ctx.shadowColor = '#ff007f';
+  ctx.shadowBlur = 35; ctx.shadowColor = '#ff007f';
+  ctx.fillStyle = 'rgba(123, 44, 191, 0.45)';
+  
+  ctx.beginPath(); ctx.moveTo(sz, 0); ctx.lineTo(-sz*0.4, -sz*0.45); ctx.lineTo(-sz*0.4, sz*0.45);
+  ctx.closePath(); ctx.fill();
 
-  // Triangular cloak tail[cite: 1]
-  ctx.beginPath();
-  ctx.moveTo(size, 0);
-  ctx.lineTo(-size * 0.5, -size * 0.4);
-  ctx.lineTo(-size * 0.5, size * 0.4);
-  ctx.closePath();
-  ctx.fillStyle = 'rgba(255, 0, 127, 0.4)';
-  ctx.fill();
-
-  // Squid Face Tentacles[cite: 1]
-  ctx.strokeStyle = '#ff007f'; ctx.lineWidth = 3;
-  for(let i=0; i<6; i++) {
-    ctx.beginPath(); ctx.moveTo(-size*0.4, (i-2.5)*4);
-    ctx.quadraticCurveTo(-size*1.2, (i-2.5)*10 + sweep, -size * 1.8, (i-2.5)*15 + sweep);
+  // Coiling active tentacles
+  ctx.strokeStyle = '#ff007f'; ctx.lineWidth = 3.5;
+  for (let i = 0; i < 8; i++) {
+    ctx.beginPath(); ctx.moveTo(-sz * 0.3, (i - 3.5) * 5);
+    ctx.quadraticCurveTo(-sz * 1.3, (i - 3.5) * 12 + sweep, -sz * 2.2, (i - 3.5) * 18 + Math.cos(T*4+i)*15);
     ctx.stroke();
   }
   ctx.restore();
 }
 
-function drawSchool() {
-  // Calculated leader hub trajectory[cite: 1]
-  const leaderX = (T * 45) % (window.innerWidth + 400) - 200;
-  const leaderY = window.innerHeight * 0.4 + Math.sin(T * 0.8) * 90;
+function drawDynamicFlock() {
+  // Global path calculation for the school leader hub
+  const targetX = (T * 55) % (window.innerWidth + 500) - 250;
+  const targetY = window.innerHeight * 0.45 + Math.sin(T * 1.1) * 120;
 
-  fishSchool.forEach(f => {
-    const fx = leaderX + f.offsetX;
-    const fy = leaderY + f.offsetY;
+  school.forEach(f => {
+    // Smooth translation vectors
+    const destX = targetX + f.ox;
+    const destY = targetY + f.oy;
+    f.x += (destX - f.x) * 0.04;
+    f.y += (destY - f.y) * 0.04;
 
-    ctx.save();
-    ctx.translate(fx, fy);
+    ctx.save(); ctx.translate(f.x, f.y);
+    ctx.shadowBlur = 10; ctx.shadowColor = '#00f5d4';
+    ctx.fillStyle = '#00f5d4';
+
+    // Fluid teardrop dynamic models
+    ctx.beginPath(); ctx.moveTo(f.size*1.4, 0); ctx.lineTo(0, -f.size*0.45);
+    ctx.lineTo(-f.size, 0); ctx.lineTo(0, f.size*0.45);
+    ctx.closePath(); ctx.fill();
     
-    ctx.shadowBlur = 8;
-    ctx.shadowColor = f.color;
-    ctx.fillStyle = f.color;
-
-    // Streamlined diamond shapes[cite: 1]
-    ctx.beginPath();
-    ctx.moveTo(f.size, 0);
-    ctx.lineTo(0, -f.size*0.4);
-    ctx.lineTo(-f.size, 0);
-    ctx.lineTo(0, f.size*0.4);
-    ctx.closePath();
-    ctx.fill();
-    ctx.shadowBlur = 0;
-    ctx.restore();
+    ctx.shadowBlur = 0; ctx.restore();
   });
-}
-
-// ─── BACKGROUND LAYERS ──────────────────────────────────────────────────[cite: 1]
-function drawSeafloor() {
-  const bh = window.innerHeight, W = window.innerWidth;
-  ctx.fillStyle = '#02050c';
-  ctx.beginPath(); ctx.moveTo(0, bh);
-  for (let i = 0; i <= 10; i++) {
-    ctx.lineTo((i/10)*W, bh - 30 - Math.sin(i+T)*8);
-  }
-  ctx.lineTo(W, bh); ctx.closePath(); ctx.fill();
 }
 
 function drawLightBeams() {
   const W = window.innerWidth, H = window.innerHeight;
-  for (let i = 0; i < 5; i++) {
-    const cx = ((Math.sin(T * 0.1 + i) * 0.4 + 0.5) * W + i * W / 5) % W;
-    const beamW = 160 + Math.sin(T * 0.3 + i) * 50;
-    let grad = ctx.createLinearGradient(cx, 0, cx + 80, H);
-    grad.addColorStop(0, 'rgba(0, 245, 212, 0.08)');
-    grad.addColorStop(1, 'rgba(0,0,0,0)');
-    
-    ctx.fillStyle = grad;
-    ctx.beginPath();
-    ctx.moveTo(cx - beamW*0.5, 0); ctx.lineTo(cx + beamW*0.5, 0);
-    ctx.lineTo(cx + beamW + 150, H); ctx.lineTo(cx - beamW - 150, H);
+  for (let i = 0; i < 6; i++) {
+    const cx = ((Math.sin(T * 0.12 + i) * 0.35 + 0.5) * W + i * W / 6) % W;
+    const bw = 180 + Math.sin(T * 0.4 + i) * 60;
+    let g = ctx.createLinearGradient(cx, 0, cx + 100, H);
+    g.addColorStop(0, 'rgba(0, 245, 212, 0.11)');
+    g.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = g;
+    ctx.beginPath(); ctx.moveTo(cx - bw*0.5, 0); ctx.lineTo(cx + bw*0.5, 0);
+    ctx.lineTo(cx + bw + 180, H); ctx.lineTo(cx - bw - 180, H);
     ctx.closePath(); ctx.fill();
   }
 }
 
-// ─── ANIMS ENGINE LOOP ───────────────────────────────────────────────────[cite: 1]
+function drawSeafloorMatrix() {
+  const bh = window.innerHeight, W = window.innerWidth;
+  ctx.fillStyle = '#010307';
+  ctx.beginPath(); ctx.moveTo(0, bh);
+  for (let i = 0; i <= 15; i++) {
+    ctx.lineTo((i / 15) * W, bh - 35 - Math.sin(i * 0.7 + T * 0.5) * 12);
+  }
+  ctx.lineTo(W, bh); ctx.closePath(); ctx.fill();
+}
+
+// ─── MASTER LOOP MATRIX ──────────────────────────────────────────────────
 function loop() {
   const W = window.innerWidth, H = window.innerHeight;
   ctx.clearRect(0, 0, W, H);
 
-  // Intense dark void background grid[cite: 1]
-  ctx.fillStyle = '#010409';
-  ctx.fillRect(0, 0, W, H);
+  // Deep oceanic ultra dark void background
+  ctx.fillStyle = '#01050c'; ctx.fillRect(0, 0, W, H);
 
   drawLightBeams();
   corals.forEach(drawGlowCoral);
-  drawSeafloor();
-  drawSchool();
+  drawSeafloorMatrix();
+  drawDynamicFlock();
 
-  // Floating air micro bubbles[cite: 1]
-  bubbles.forEach(b => {
-    b.y -= b.speed; b.wobble += b.wobbleSpeed; b.x += Math.sin(b.wobble) * 0.5;
-    if (b.y < -10) { b.y = H + 10; b.x = Math.random() * W; }
-    ctx.beginPath(); ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
-    ctx.strokeStyle = 'rgba(57, 255, 20, 0.3)'; ctx.stroke();
+  // Floating Micro-Plankton Matrix rendering
+  plankton.forEach(p => {
+    p.y += p.speedY; p.x += p.speedX; p.alphaPhase += 0.01;
+    if (p.y < -10) p.y = H + 10;
+    ctx.fillStyle = `rgba(57, 255, 20, ${0.2 + Math.sin(p.alphaPhase)*0.3})`;
+    ctx.fillRect(p.x, p.y, p.size, p.size);
   });
 
-  // Aquatic species animation matrix[cite: 1]
+  // Bubbles
+  bubbles.forEach(b => {
+    b.y -= b.speed; b.w += b.wSpeed; b.x += Math.sin(b.w) * 0.6;
+    if (b.y < -10) { b.y = H + 10; b.x = Math.random() * W; }
+    ctx.beginPath(); ctx.arc(b.x, b.y, b.r, 0, Math.PI*2);
+    ctx.strokeStyle = 'rgba(0, 245, 212, 0.35)'; ctx.stroke();
+  });
+
+  // Exotic Marine Life Translation matrix
   marineLife.forEach(m => {
     if (m.vx) m.x += m.vx;
     if (m.vy) m.y += m.vy;
 
-    if (m.vx > 0 && m.x > W + m.size * 2) m.x = -m.size * 2;
-    if (m.vx < 0 && m.x < -m.size * 2) m.x = W + m.size * 2;
+    if (m.vx > 0 && m.x > W + m.size * 2.5) m.x = -m.size * 2.5;
+    if (m.vx < 0 && m.x < -m.size * 2.5) m.x = W + m.size * 2.5;
 
+    // Entity switchboard Router
     if (m.type === 'fish') drawExoticFish(m);
-    else if (m.type === 'jellyfish') {
-      m.y -= m.vy * 0.4;
-      if (m.y < -m.size * 3) { m.y = H + m.size * 2; m.x = Math.random() * W; }
-      drawNeonJelly(m);
+    else if (m.type === 'lionfish') { m.y += Math.sin(T*0.7 + m.phase)*0.25; drawLionfish(m); }
+    else if (m.type === 'jelly') {
+      m.y -= m.vy * 0.45; m.x += Math.sin(T*0.3 + m.phase)*0.2;
+      if (m.y < -m.size * 4) { m.y = H + m.size*2; m.x = Math.random()*W; }
+      drawCombJelly(m);
     }
-    else if (m.type === 'manta') drawMantaRay(m);
-    else if (m.type === 'lionfish') {
-      m.y += Math.sin(T * 0.5 + m.phase) * 0.2;
-      drawLionfish(m);
-    }
-    else if (m.type === 'squid') {
-      m.x += Math.cos(T*0.2)*0.5;
-      if(m.x < -100) m.x = W + 100;
-      drawSquid(m);
-    }
+    else if (m.type === 'whaleshark') { m.y += Math.sin(T * 0.2) * 0.08; drawWhaleShark(m); }
+    else if (m.type === 'squid') { m.x += Math.cos(T*0.1)*0.2; drawAbyssalSquid(m); }
   });
 
   T += 0.016;
   requestAnimationFrame(loop);
 }
 
-// ─── PORTFOLIO RENDERERS ─────────────────────────────────────────────────[cite: 1]
-function drawPortfolioScene(id, colors, bgT, bgB) {
+// ─── MINI PORTFOLIO RENDER ENGINE ────────────────────────────────────────
+function drawPortfolioScene(id, primaryGlow) {
   const c = document.getElementById(id); if (!c) return;
   const rect = c.parentElement.getBoundingClientRect();
   c.width = rect.width || 360; c.height = rect.height || 200;
   const cx = c.getContext('2d');
   
-  function anim() {
-    cx.fillStyle = bgB; cx.fillRect(0, 0, c.width, c.height);
-    cx.shadowBlur = 15; cx.shadowColor = colors[0];
-    cx.fillStyle = colors[0];
-    cx.beginPath(); cx.arc(c.width*0.5 + Math.sin(T)*30, c.height*0.5, 12, 0, Math.PI*2); cx.fill();
+  function step() {
+    cx.fillStyle = '#010812'; cx.fillRect(0, 0, c.width, c.height);
+    cx.shadowBlur = 20; cx.shadowColor = primaryGlow;
+    cx.fillStyle = primaryGlow;
+    cx.beginPath(); cx.ellipse(c.width*0.5 + Math.sin(T*2)*25, c.height*0.5 + Math.cos(T)*10, 10, 6, 0, 0, Math.PI*2); cx.fill();
     cx.shadowBlur = 0;
-    requestAnimationFrame(anim);
+    requestAnimationFrame(step);
   }
-  anim();
+  step();
 }
 
 window.addEventListener('load', () => {
   initAquarium();
   loop();
   setTimeout(() => {
-    drawPortfolioScene('p1', ['#ff007f', '#fffb00'], '#050010', '#120024');
-    drawPortfolioScene('p2', ['#00f5d4', '#00b4d8'], '#000c14', '#001e33');
-    drawPortfolioScene('p3', ['#39ff14', '#fffb00'], '#020a00', '#0a1f00');
-  }, 200);
+    drawPortfolioScene('p1', '#ff007f');
+    drawPortfolioScene('p2', '#00f5d4');
+    drawPortfolioScene('p3', '#fffb00');
+  }, 250);
 });
 </script>
 
+```
