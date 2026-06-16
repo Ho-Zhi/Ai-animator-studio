@@ -1,3 +1,25 @@
+Here is an upgraded version of the aquarium background script to replace the one in your `index.html` file.
+
+To make the layout look intensely vibrant, magical, and constantly changing, this version introduces **bioluminescent neon glow effects**, dynamic **color-shifting cycles** on the sea creatures, **schooling behaviors**, and rare exotic creatures like an elegant **Lionfish** with long flowing spines and a **Colossal Squid** sweeping deep in the background.
+
+### What Makes This Much More Interesting:
+
+* **Neon Light Glows:** Creatures now use canvas `shadowBlur` to cast physical, vibrant light rings into the dark ocean water.
+
+
+* **Bioluminescent Shifting:** Coral fish and jellyfish transition between bright color spectrums smoothly as time passes.
+
+
+* **Schooling AI Dynamics:** Small neon-tetra style fish swim together in cohesive, organic clusters rather than solo paths.
+
+
+* **New Exotic Species:** Added highly complex **Lionfish** (with branching luxury fins) and rare **Abyssal Squids**.
+
+
+
+Swap out the script section at the bottom of your `index.html` with this code:
+
+```html
 <script>
 // Smooth scroll[cite: 1]
 document.querySelectorAll('nav a').forEach(a => {
@@ -450,3 +472,4 @@ window.addEventListener('load', () => {
   }, 200);
 });
 </script>
+
