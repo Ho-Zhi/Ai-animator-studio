@@ -1,22 +1,3 @@
-Here is your fully updated website code.
-
-I rewritten the rendering script to ditch the flat, plain-colored vector shapes and replace them with **detailed, textured, and mathematically generated sea creatures**. The ecosystem now features multi-layered, organic shading, distinct anatomy (stripes, fins, bioluminescent glowing effects, and variable opacity), and an expanded cast of species.
-
-### Key Upgrades
-
-* **New Exotic Species:** Added highly realistic **Manta Rays** (with sweeping wing physics), **Sea Turtles** (with distinct flippers and shells), alongside complex **Clownfish**, and glowing **Bioluminescent Jellyfish**.
-
-
-* **Realistic Textures & Lighting:** Creatures now utilize custom Canvas gradients to mimic physical depth, light hitting scales, and glowing transparent tissue.
-
-
-* **Organic Corals and Reefs:** The seafloor features varying depths of coral arrays with individual sway animations to match the physical water currents.
-
-
-
-To use this, replace your current inline `<script>` tags at the bottom of your HTML document with the code below.
-
-```html
 <script>
 // Smooth scroll[cite: 1]
 document.querySelectorAll('nav a').forEach(a => {
@@ -26,90 +7,105 @@ document.querySelectorAll('nav a').forEach(a => {
   });
 });
 
-// ─── RICH AQUARIUM BACKGROUND ──────────────────────────────────────────[cite: 1]
+// ─── HIGH-VISUALS NEON AQUARIUM BACKGROUND ─────────────────────────────────[cite: 1]
 const bgCanvas = document.getElementById('bg');
 const ctx = bgCanvas.getContext('2d');
 
 function resize() { bgCanvas.width = window.innerWidth; bgCanvas.height = window.innerHeight; }
 resize(); window.addEventListener('resize', resize);
 
-const bubbles = [], corals = [], marineLife = [];
+const bubbles = [], corals = [], marineLife = [], fishSchool = [];
 let T = 0;
 
-// Initialize Eco-System[cite: 1]
+// Neon/Electric Color Palettes[cite: 1]
+const NEON_PALETTES = ['#00f5d4', '#7b2cbf', '#ff007f', '#39ff14', '#fffb00', '#ff5400', '#00b4d8'];
+
 function initAquarium() {
   const W = window.innerWidth, H = window.innerHeight;
 
-  // Generate Bubbles[cite: 1]
-  for (let i = 0; i < 40; i++) {
+  // Generate Vibrant Bubbles[cite: 1]
+  for (let i = 0; i < 45; i++) {
     bubbles.push({
       x: Math.random() * W, y: H + Math.random() * 300,
-      r: 1 + Math.random() * 4, speed: 0.4 + Math.random() * 0.8,
-      wobble: Math.random() * Math.PI * 2, wobbleSpeed: 0.02 + Math.random() * 0.03
+      r: 1 + Math.random() * 5, speed: 0.5 + Math.random() * 1,
+      wobble: Math.random() * Math.PI * 2, wobbleSpeed: 0.03 + Math.random() * 0.03
     });
   }
 
-  // Generate Realistic Reef Arrays[cite: 1]
-  for (let i = 0; i < 22; i++) {
+  // Generate Glowing Reef Arrays[cite: 1]
+  for (let i = 0; i < 24; i++) {
     corals.push({
-      x: (i / 22) * W + (Math.random() - 0.5) * (W / 25),
-      height: 60 + Math.random() * 110,
+      x: (i / 24) * W + (Math.random() - 0.5) * (W / 30),
+      height: 70 + Math.random() * 130,
       branches: 3 + Math.floor(Math.random() * 3),
-      baseColor: ['#ff5252', '#ff4081', '#ff6f00', '#e040fb', '#00e5ff', '#00e676'][i % 6],
-      swaySpeed: 0.4 + Math.random() * 0.5,
+      baseColor: NEON_PALETTES[i % NEON_PALETTES.length],
+      swaySpeed: 0.6 + Math.random() * 0.6,
       swayOffset: Math.random() * Math.PI,
-      thickness: 3 + Math.random() * 4
+      thickness: 4 + Math.random() * 4
     });
   }
 
-  // Populate Diverse, Exotic Marine Creatures[cite: 1]
-  // 1. Tropical Coral Fish (Clownfish & Tang variants)[cite: 1]
-  for (let i = 0; i < 12; i++) {
+  // Create Schooling Fish System (Swim together in harmony)[cite: 1]
+  for (let i = 0; i < 15; i++) {
+    fishSchool.push({
+      offsetY: (Math.random() - 0.5) * 80,
+      offsetX: (Math.random() - 0.5) * 120,
+      size: 6 + Math.random() * 6,
+      color: '#00f5d4'
+    });
+  }
+
+  // Add Cast of Exotic/Bioluminescent Marine Life[cite: 1]
+  // 1. Color-Shifting Coral Fish[cite: 1]
+  for (let i = 0; i < 10; i++) {
     marineLife.push({
-      type: 'fish', x: Math.random() * W, y: 100 + Math.random() * (H - 250),
-      vx: (Math.random() * 1.2 + 0.5) * (Math.random() < 0.5 ? 1 : -1),
-      vy: (Math.random() - 0.5) * 0.2, size: 14 + Math.random() * 14,
-      primaryColor: i % 2 === 0 ? '#ff6d00' : '#2979ff', // Orange Clownfish vs Royal Blue Tang[cite: 1]
-      secondaryColor: i % 2 === 0 ? '#ffffff' : '#ffd600',
-      stripeColor: '#212121', tailSpeed: 0.12 + Math.random() * 0.08, phase: Math.random() * 5
+      type: 'fish', x: Math.random() * W, y: 120 + Math.random() * (H - 280),
+      vx: (Math.random() * 1.5 + 0.6) * (Math.random() < 0.5 ? 1 : -1),
+      vy: (Math.random() - 0.5) * 0.25, size: 16 + Math.random() * 16,
+      colorIndex: i % NEON_PALETTES.length, tailSpeed: 0.15 + Math.random() * 0.08, phase: Math.random() * 5
     });
   }
 
-  // 2. Bioluminescent Jellyfish[cite: 1]
-  for (let i = 0; i < 6; i++) {
+  // 2. Neon Electrified Jellyfish[cite: 1]
+  for (let i = 0; i < 5; i++) {
     marineLife.push({
       type: 'jellyfish', x: Math.random() * W, y: Math.random() * (H * 0.6),
-      vy: 0.2 + Math.random() * 0.25, size: 22 + Math.random() * 16,
-      color: ['#00e5ff', '#d500f9', '#ff1744', '#1de9b6'][i % 4],
-      pulseSpeed: 0.03 + Math.random() * 0.02, phase: Math.random() * Math.PI * 2
+      vy: 0.25 + Math.random() * 0.3, size: 24 + Math.random() * 18,
+      color: NEON_PALETTES[(i + 2) % NEON_PALETTES.length], pulseSpeed: 0.04 + Math.random() * 0.02, phase: Math.random() * Math.PI * 2
     });
   }
 
   // 3. Majestic Manta Rays[cite: 1]
-  for (let i = 0; i < 3; i++) {
-    marineLife.push({
-      type: 'manta', x: Math.random() * W, y: 80 + Math.random() * (H * 0.5),
-      vx: (0.6 + Math.random() * 0.5) * (Math.random() < 0.5 ? 1 : -1),
-      vy: (Math.random() - 0.5) * 0.1, size: 45 + Math.random() * 25,
-      color: '#1a237e', bellyColor: '#e0f7fa', wingPhase: Math.random() * 5
-    });
-  }
-
-  // 4. Sea Turtles[cite: 1]
   for (let i = 0; i < 2; i++) {
     marineLife.push({
-      type: 'turtle', x: Math.random() * W, y: H * 0.3 + Math.random() * (H * 0.4),
-      vx: (0.4 + Math.random() * 0.3) * (Math.random() < 0.5 ? 1 : -1),
-      vy: (Math.random() - 0.5) * 0.08, size: 35 + Math.random() * 15,
-      shellColor: '#2e7d32', skinColor: '#81c784', paddlePhase: Math.random() * 5
+      type: 'manta', x: Math.random() * W, y: 100 + Math.random() * (H * 0.4),
+      vx: (0.7 + Math.random() * 0.6) * (Math.random() < 0.5 ? 1 : -1),
+      vy: (Math.random() - 0.5) * 0.1, size: 55 + Math.random() * 20,
+      wingPhase: Math.random() * 5
     });
   }
+
+  // 4. Exotic Spined Lionfish[cite: 1]
+  for (let i = 0; i < 2; i++) {
+    marineLife.push({
+      type: 'lionfish', x: Math.random() * W, y: H * 0.4 + Math.random() * (H * 0.4),
+      vx: (0.3 + Math.random() * 0.3) * (Math.random() < 0.5 ? 1 : -1),
+      vy: (Math.random() - 0.5) * 0.15, size: 25 + Math.random() * 10,
+      phase: Math.random() * Math.PI
+    });
+  }
+
+  // 5. Deep Abyssal Squid[cite: 1]
+  marineLife.push({
+    type: 'squid', x: W * 0.5, y: H * 0.7,
+    vx: 0.4, vy: -0.05, size: 50, phase: 0
+  });
 }
 
-// ─── RENDERING FUNCTIONS ───────────────────────────────────────────────[cite: 1]
-function drawReefCoral(c) {
+// ─── RENDERING ENGINES ───────────────────────────────────────────────────[cite: 1]
+function drawGlowCoral(c) {
   const bh = window.innerHeight;
-  const sway = Math.sin(T * c.swaySpeed + c.swayOffset) * 0.08;
+  const sway = Math.sin(T * c.swaySpeed + c.swayOffset) * 0.09;
 
   function grow(x, y, len, angle, depth) {
     if (depth <= 0) return;
@@ -120,20 +116,18 @@ function drawReefCoral(c) {
     ctx.moveTo(x, y);
     ctx.lineTo(ex, ey);
     
-    // Textured depth shading[cite: 1]
-    let grad = ctx.createLinearGradient(x, y, ex, ey);
-    grad.addColorStop(0, c.baseColor);
-    grad.addColorStop(1, '#051f3a');
-    
-    ctx.strokeStyle = depth === 1 ? c.baseColor + 'aa' : grad;
+    ctx.strokeStyle = c.baseColor;
     ctx.lineWidth = depth * c.thickness * 0.7;
     ctx.lineCap = 'round';
+    
+    // Add neon ambient bloom to corals[cite: 1]
+    ctx.shadowBlur = 12;
+    ctx.shadowColor = c.baseColor;
     ctx.stroke();
+    ctx.shadowBlur = 0; // Reset[cite: 1]
 
-    // Natural multi-branch generation[cite: 1]
-    grow(ex, ey, len * 0.75, angle - 0.35 + sway, depth - 1);
-    grow(ex, ey, len * 0.65, angle + 0.45 + sway, depth - 1);
-    if(depth > 2) grow(ex, ey, len * 0.5, angle + sway * 0.2, depth - 2);
+    grow(ex, ey, len * 0.75, angle - 0.38 + sway, depth - 1);
+    grow(ex, ey, len * 0.65, angle + 0.48 + sway, depth - 1);
   }
   grow(c.x, bh, c.height * 0.4, -Math.PI / 2, c.branches);
 }
@@ -144,87 +138,119 @@ function drawExoticFish(f) {
   if (f.vx < 0) ctx.scale(-1, 1);
 
   const s = f.size;
-  const tailWag = Math.sin(T * 8 * f.tailSpeed + f.phase) * 0.4;
+  const tailWag = Math.sin(T * 10 * f.tailSpeed + f.phase) * 0.4;
+  
+  // Dynamic Spectrum shifting color effect![cite: 1]
+  const hueValue = (T * 15 + f.colorIndex * 40) % 360;
+  const dynamicColor = `hsl(${hueValue}, 100%, 60%)`;
+  const secondaryColor = `hsl(${(hueValue + 120) % 360}, 100%, 50%)`;
 
-  // 1. Tail Fin (Dynamic/Fluid)[cite: 1]
+  // Tail[cite: 1]
   ctx.beginPath();
-  ctx.moveTo(-s * 0.6, 0);
-  ctx.lineTo(-s * 1.4, -s * 0.6 + tailWag * s * 0.5);
-  ctx.lineTo(-s * 1.2, 0);
-  ctx.lineTo(-s * 1.4, s * 0.6 + tailWag * s * 0.5);
+  ctx.moveTo(-s * 0.5, 0);
+  ctx.lineTo(-s * 1.5, -s * 0.7 + tailWag * s * 0.5);
+  ctx.lineTo(-s * 1.1, 0);
+  ctx.lineTo(-s * 1.5, s * 0.7 + tailWag * s * 0.5);
   ctx.closePath();
-  ctx.fillStyle = f.secondaryColor;
+  ctx.fillStyle = secondaryColor;
   ctx.fill();
 
-  // 2. Realistic Rendered Main Body Gradient[cite: 1]
-  let bodyGrad = ctx.createRadialGradient(s*0.2, -s*0.1, s*0.2, 0, 0, s);
-  bodyGrad.addColorStop(0, '#ffffff');
-  bodyGrad.addColorStop(0.3, f.primaryColor);
-  bodyGrad.addColorStop(1, f.primaryColor + 'cc');
-
+  // Glow body[cite: 1]
+  ctx.shadowBlur = 15;
+  ctx.shadowColor = dynamicColor;
+  
   ctx.beginPath();
   ctx.ellipse(0, 0, s, s * 0.65, 0, 0, Math.PI * 2);
+  let bodyGrad = ctx.createRadialGradient(s*0.3, -s*0.1, 2, 0, 0, s);
+  bodyGrad.addColorStop(0, '#fff');
+  bodyGrad.addColorStop(0.4, dynamicColor);
+  bodyGrad.addColorStop(1, '#000');
   ctx.fillStyle = bodyGrad;
   ctx.fill();
+  ctx.shadowBlur = 0;
 
-  // 3. Exotic Structural Stripes[cite: 1]
-  ctx.fillStyle = f.stripeColor;
+  // Pattern details[cite: 1]
+  ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
   ctx.beginPath();
-  ctx.ellipse(-s * 0.1, 0, s * 0.12, s * 0.6, 0, 0, Math.PI * 2);
-  ctx.ellipse(s * 0.3, 0, s * 0.08, s * 0.5, 0, 0, Math.PI * 2);
-  ctx.fill();
-  ctx.fillStyle = f.secondaryColor;
-  ctx.beginPath();
-  ctx.ellipse(-s * 0.1, 0, s * 0.06, s * 0.55, 0, 0, Math.PI * 2);
+  ctx.ellipse(s*0.1, 0, s*0.08, s*0.4, 0, 0, Math.PI * 2);
+  ctx.ellipse(-s*0.2, 0, s*0.08, s*0.4, 0, 0, Math.PI * 2);
   ctx.fill();
 
-  // 4. Eye Anatomy[cite: 1]
-  ctx.beginPath();
-  ctx.arc(s * 0.55, -s * 0.12, s * 0.14, 0, Math.PI * 2);
-  ctx.fillStyle = '#fff';
-  ctx.fill();
-  ctx.beginPath();
-  ctx.arc(s * 0.6, -s * 0.12, s * 0.07, 0, Math.PI * 2);
-  ctx.fillStyle = '#000';
-  ctx.fill();
+  // Eye[cite: 1]
+  ctx.beginPath(); ctx.arc(s * 0.55, -s * 0.15, s * 0.12, 0, Math.PI * 2);
+  ctx.fillStyle = '#fff'; ctx.fill();
+  ctx.beginPath(); ctx.arc(s * 0.6, -s * 0.15, s * 0.06, 0, Math.PI * 2);
+  ctx.fillStyle = '#000'; ctx.fill();
 
   ctx.restore();
 }
 
-function drawExoticJelly(j) {
+function drawLionfish(f) {
+  ctx.save();
+  ctx.translate(f.x, f.y);
+  if (f.vx < 0) ctx.scale(-1, 1);
+  const s = f.size;
+
+  // Majestic display spines[cite: 1]
+  ctx.strokeStyle = '#ff007f';
+  ctx.lineWidth = 1.5;
+  ctx.shadowBlur = 10;
+  ctx.shadowColor = '#ff007f';
+  for (let i = 0; i < 10; i++) {
+    const angle = (i / 9) * Math.PI - Math.PI*0.5;
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    ctx.quadraticCurveTo(Math.cos(angle)*s*1.5, Math.sin(angle)*s*1.5, Math.cos(angle)*s*1.8 + Math.sin(T*3+i)*4, Math.sin(angle)*s*1.8);
+    ctx.stroke();
+  }
+
+  // Zebra-striped zebra body[cite: 1]
+  let grad = ctx.createLinearGradient(-s, 0, s, 0);
+  grad.addColorStop(0, '#ff5400'); grad.addColorStop(1, '#fffb00');
+  ctx.fillStyle = grad;
+  ctx.beginPath(); ctx.ellipse(0, 0, s, s*0.7, 0, 0, Math.PI*2); ctx.fill();
+  ctx.shadowBlur = 0;
+
+  // Zebra pattern[cite: 1]
+  ctx.strokeStyle = '#4a001a'; ctx.lineWidth = 3;
+  for(let i=-2; i<=2; i++) {
+    ctx.beginPath(); ctx.moveTo(i*s*0.3, -s*0.6); ctx.lineTo(i*s*0.2, s*0.6); ctx.stroke();
+  }
+  ctx.restore();
+}
+
+function drawNeonJelly(j) {
   ctx.save();
   ctx.translate(j.x, j.y);
   
-  const pulse = Math.sin(T * 25 * j.pulseSpeed + j.phase);
-  const sizeX = j.size * (1 + pulse * 0.15);
-  const sizeY = j.size * (0.6 - pulse * 0.1);
+  const pulse = Math.sin(T * 22 * j.pulseSpeed + j.phase);
+  const sizeX = j.size * (1 + pulse * 0.18);
+  const sizeY = j.size * (0.65 - pulse * 0.1);
 
-  // Transparent Bioluminescent Cap[cite: 1]
-  let capGrad = ctx.createRadialGradient(0, -sizeY * 0.2, 2, 0, 0, sizeX);
+  ctx.shadowBlur = 20;
+  ctx.shadowColor = j.color;
+
+  let capGrad = ctx.createRadialGradient(0, -sizeY * 0.1, 2, 0, 0, sizeX);
   capGrad.addColorStop(0, '#ffffff');
-  capGrad.addColorStop(0.4, j.color);
+  capGrad.addColorStop(0.3, j.color);
   capGrad.addColorStop(1, 'rgba(0,0,0,0)');
 
   ctx.beginPath();
   ctx.ellipse(0, 0, sizeX, sizeY, 0, Math.PI, 0);
   ctx.fillStyle = capGrad;
   ctx.fill();
+  ctx.shadowBlur = 0;
 
-  // Trailing Detailed Tentacles[cite: 1]
-  for (let i = 0; i < 7; i++) {
-    const tx = (i / 6 - 0.5) * sizeX * 1.3;
+  // Electric Tentacles[cite: 1]
+  for (let i = 0; i < 8; i++) {
+    const tx = (i / 7 - 0.5) * sizeX * 1.2;
     ctx.beginPath();
     ctx.moveTo(tx, 0);
-    
-    let curX = tx;
-    let curY = 0;
-    for (let k = 1; k <= 12; k++) {
-      const targetY = (k / 12) * j.size * 3.5;
-      const targetX = tx + Math.sin(T * 3 + i + k * 0.5) * (4 + k * 0.8);
-      ctx.lineTo(targetX, targetY);
+    for (let k = 1; k <= 10; k++) {
+      ctx.lineTo(tx + Math.sin(T * 4 + i + k * 0.6) * (6 + k), (k / 10) * j.size * 3.8);
     }
-    ctx.strokeStyle = j.color + 'aa';
-    ctx.lineWidth = 1.2 - (i % 2) * 0.5;
+    ctx.strokeStyle = j.color;
+    ctx.lineWidth = 1.5;
     ctx.stroke();
   }
   ctx.restore();
@@ -236,191 +262,159 @@ function drawMantaRay(m) {
   if (m.vx < 0) ctx.scale(-1, 1);
 
   const s = m.size;
-  const wingSway = Math.sin(T * 2 + m.wingPhase) * s * 0.3;
+  const wingSway = Math.sin(T * 2.5 + m.wingPhase) * s * 0.35;
 
-  // Render Manta Body Shadow/Depth[cite: 1]
-  let mantaGrad = ctx.createLinearGradient(-s, 0, s, 0);
-  mantaGrad.addColorStop(0, '#0d1b2a');
-  mantaGrad.addColorStop(0.5, m.color);
-  mantaGrad.addColorStop(1, '#000814');
+  ctx.shadowBlur = 25;
+  ctx.shadowColor = '#7b2cbf';
 
   ctx.beginPath();
-  ctx.moveTo(s * 0.7, 0); // Head/Cephalic horns[cite: 1]
-  ctx.bezierCurveTo(s * 0.4, -s * 0.3, 0, -s * 0.5 - wingSway, -s * 0.2, 0); // Left Wing[cite: 1]
-  ctx.bezierCurveTo(-s * 0.5, s * 0.1, -s * 0.8, 0, -s, 0); // Long Tail[cite: 1]
-  ctx.bezierCurveTo(-s * 0.5, s * 0.2, 0, s * 0.5 + wingSway, s * 0.7, 0); // Right Wing[cite: 1]
+  ctx.moveTo(s * 0.8, 0);
+  ctx.bezierCurveTo(s * 0.4, -s * 0.4, 0, -s * 0.6 - wingSway, -s * 0.2, 0);
+  ctx.bezierCurveTo(-s * 0.6, s * 0.1, -s * 0.9, 0, -s * 1.5, 0); // Long tail spine[cite: 1]
+  ctx.bezierCurveTo(-s * 0.6, s * 0.2, 0, s * 0.6 + wingSway, s * 0.8, 0);
   ctx.closePath();
+  
+  let mantaGrad = ctx.createLinearGradient(-s, 0, s, 0);
+  mantaGrad.addColorStop(0, '#120024');
+  mantaGrad.addColorStop(0.5, '#7b2cbf');
+  mantaGrad.addColorStop(1, '#ff007f');
   ctx.fillStyle = mantaGrad;
   ctx.fill();
-
-  // Cephalic Fins / Horn Shading[cite: 1]
-  ctx.beginPath();
-  ctx.ellipse(s * 0.6, -s * 0.1, s * 0.1, s * 0.05, 0, 0, Math.PI*2);
-  ctx.ellipse(s * 0.6, s * 0.1, s * 0.1, s * 0.05, 0, 0, Math.PI*2);
-  ctx.fillStyle = '#415a77';
-  ctx.fill();
+  ctx.shadowBlur = 0;
 
   ctx.restore();
 }
 
-function drawSeaTurtle(t) {
+function drawSquid(s) {
   ctx.save();
-  ctx.translate(t.x, t.y);
-  if (t.vx < 0) ctx.scale(-1, 1);
+  ctx.translate(s.x, s.y);
+  const size = s.size;
+  const sweep = Math.sin(T * 1.5) * 8;
 
-  const s = t.size;
-  const paddleSway = Math.sin(T * 1.5 + t.paddlePhase);
+  ctx.shadowBlur = 30;
+  ctx.shadowColor = '#ff007f';
 
-  // Front Flippers/Paddles[cite: 1]
-  ctx.save();
-  ctx.translate(s * 0.3, -s * 0.2);
-  ctx.rotate(-0.5 + paddleSway * 0.5);
+  // Triangular cloak tail[cite: 1]
   ctx.beginPath();
-  ctx.ellipse(0, 0, s * 0.5, s * 0.18, 0, 0, Math.PI * 2);
-  ctx.fillStyle = t.skinColor;
-  ctx.fill();
-  ctx.restore();
-
-  // Carapace/Shell[cite: 1]
-  let shellGrad = ctx.createRadialGradient(-s*0.1, -s*0.1, 5, 0, 0, s);
-  shellGrad.addColorStop(0, '#a5d6a7');
-  shellGrad.addColorStop(0.6, t.shellColor);
-  shellGrad.addColorStop(1, '#1b5e20');
-
-  ctx.beginPath();
-  ctx.ellipse(0, 0, s, s * 0.75, 0, 0, Math.PI * 2);
-  ctx.fillStyle = shellGrad;
+  ctx.moveTo(size, 0);
+  ctx.lineTo(-size * 0.5, -size * 0.4);
+  ctx.lineTo(-size * 0.5, size * 0.4);
+  ctx.closePath();
+  ctx.fillStyle = 'rgba(255, 0, 127, 0.4)';
   ctx.fill();
 
-  // Shell Patterns[cite: 1]
-  ctx.strokeStyle = 'rgba(255,255,255,0.15)';
-  ctx.lineWidth = 2;
-  ctx.beginPath();
-  ctx.ellipse(0, 0, s * 0.7, s * 0.5, 0, 0, Math.PI * 2);
-  ctx.stroke();
-
-  // Flippers Rear & Head[cite: 1]
-  ctx.beginPath();
-  ctx.ellipse(s * 0.9, 0, s * 0.22, s * 0.15, 0, 0, Math.PI * 2); // Head[cite: 1]
-  ctx.ellipse(-s * 0.7, -s * 0.3, s * 0.25, s * 0.1, 0, 0, Math.PI * 2); // Rear Flipper[cite: 1]
-  ctx.fillStyle = t.skinColor;
-  ctx.fill();
-
+  // Squid Face Tentacles[cite: 1]
+  ctx.strokeStyle = '#ff007f'; ctx.lineWidth = 3;
+  for(let i=0; i<6; i++) {
+    ctx.beginPath(); ctx.moveTo(-size*0.4, (i-2.5)*4);
+    ctx.quadraticCurveTo(-size*1.2, (i-2.5)*10 + sweep, -size * 1.8, (i-2.5)*15 + sweep);
+    ctx.stroke();
+  }
   ctx.restore();
 }
 
-function drawSeafloorSand() {
+function drawSchool() {
+  // Calculated leader hub trajectory[cite: 1]
+  const leaderX = (T * 45) % (window.innerWidth + 400) - 200;
+  const leaderY = window.innerHeight * 0.4 + Math.sin(T * 0.8) * 90;
+
+  fishSchool.forEach(f => {
+    const fx = leaderX + f.offsetX;
+    const fy = leaderY + f.offsetY;
+
+    ctx.save();
+    ctx.translate(fx, fy);
+    
+    ctx.shadowBlur = 8;
+    ctx.shadowColor = f.color;
+    ctx.fillStyle = f.color;
+
+    // Streamlined diamond shapes[cite: 1]
+    ctx.beginPath();
+    ctx.moveTo(f.size, 0);
+    ctx.lineTo(0, -f.size*0.4);
+    ctx.lineTo(-f.size, 0);
+    ctx.lineTo(0, f.size*0.4);
+    ctx.closePath();
+    ctx.fill();
+    ctx.shadowBlur = 0;
+    ctx.restore();
+  });
+}
+
+// ─── BACKGROUND LAYERS ──────────────────────────────────────────────────[cite: 1]
+function drawSeafloor() {
   const bh = window.innerHeight, W = window.innerWidth;
-  
-  // Multi-layered ocean floor depths[cite: 1]
-  ctx.beginPath();
-  ctx.moveTo(0, bh);
-  for (let i = 0; i <= 20; i++) {
-    const x = (i / 20) * W;
-    const y = bh - 25 - Math.sin(i * 0.5 + T * 0.1) * 10;
-    ctx.lineTo(x, y);
+  ctx.fillStyle = '#02050c';
+  ctx.beginPath(); ctx.moveTo(0, bh);
+  for (let i = 0; i <= 10; i++) {
+    ctx.lineTo((i/10)*W, bh - 30 - Math.sin(i+T)*8);
   }
-  ctx.lineTo(W, bh);
-  ctx.closePath();
-  ctx.fillStyle = '#020c1b';
-  ctx.fill();
-
-  ctx.beginPath();
-  ctx.moveTo(0, bh);
-  for (let i = 0; i <= 20; i++) {
-    const x = (i / 20) * W;
-    const y = bh - 15 - Math.sin(i * 0.8 + T * 0.15) * 6;
-    ctx.lineTo(x, y);
-  }
-  ctx.lineTo(W, bh);
-  ctx.closePath();
-  ctx.fillStyle = '#010710';
-  ctx.fill();
+  ctx.lineTo(W, bh); ctx.closePath(); ctx.fill();
 }
 
-function drawLightRayCaustics() {
+function drawLightBeams() {
   const W = window.innerWidth, H = window.innerHeight;
-  for (let i = 0; i < 6; i++) {
-    const cx = ((Math.sin(T * 0.15 + i) * 0.3 + 0.5) * W + i * W / 6) % W;
-    const r = 120 + Math.sin(T * 0.4 + i) * 40;
-    let grad = ctx.createRadialGradient(cx, 0, 10, cx, 30, r);
-    grad.addColorStop(0, 'rgba(0, 229, 255, 0.06)');
+  for (let i = 0; i < 5; i++) {
+    const cx = ((Math.sin(T * 0.1 + i) * 0.4 + 0.5) * W + i * W / 5) % W;
+    const beamW = 160 + Math.sin(T * 0.3 + i) * 50;
+    let grad = ctx.createLinearGradient(cx, 0, cx + 80, H);
+    grad.addColorStop(0, 'rgba(0, 245, 212, 0.08)');
     grad.addColorStop(1, 'rgba(0,0,0,0)');
     
     ctx.fillStyle = grad;
     ctx.beginPath();
-    ctx.moveTo(cx - r*0.5, 0);
-    ctx.lineTo(cx + r*0.5, 0);
-    ctx.lineTo(cx + r, H);
-    ctx.lineTo(cx - r, H);
-    ctx.closePath();
-    ctx.fill();
+    ctx.moveTo(cx - beamW*0.5, 0); ctx.lineTo(cx + beamW*0.5, 0);
+    ctx.lineTo(cx + beamW + 150, H); ctx.lineTo(cx - beamW - 150, H);
+    ctx.closePath(); ctx.fill();
   }
 }
 
-// ─── MAIN ANIMATION LOOP ───────────────────────────────────────────────[cite: 1]
+// ─── ANIMS ENGINE LOOP ───────────────────────────────────────────────────[cite: 1]
 function loop() {
   const W = window.innerWidth, H = window.innerHeight;
   ctx.clearRect(0, 0, W, H);
 
-  // High-fidelity Deep Ocean Gradient background[cite: 1]
-  let oceanBg = ctx.createLinearGradient(0, 0, 0, H);
-  oceanBg.addColorStop(0, '#010a15');
-  oceanBg.addColorStop(0.5, '#021324');
-  oceanBg.addColorStop(1, '#052446');
-  ctx.fillStyle = oceanBg;
+  // Intense dark void background grid[cite: 1]
+  ctx.fillStyle = '#010409';
   ctx.fillRect(0, 0, W, H);
 
-  drawLightRayCaustics();
+  drawLightBeams();
+  corals.forEach(drawGlowCoral);
+  drawSeafloor();
+  drawSchool();
 
-  // Render Coral Array Ecosystem[cite: 1]
-  corals.forEach(drawReefCoral);
-  drawSeafloorSand();
-
-  // Manage and Render Ambient Air Bubbles[cite: 1]
+  // Floating air micro bubbles[cite: 1]
   bubbles.forEach(b => {
-    b.y -= b.speed;
-    b.wobble += b.wobbleSpeed;
-    b.x += Math.sin(b.wobble) * 0.4;
+    b.y -= b.speed; b.wobble += b.wobbleSpeed; b.x += Math.sin(b.wobble) * 0.5;
     if (b.y < -10) { b.y = H + 10; b.x = Math.random() * W; }
-    
-    ctx.beginPath();
-    ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
-    ctx.strokeStyle = 'rgba(0, 229, 255, 0.25)';
-    ctx.lineWidth = 0.6;
-    ctx.stroke();
+    ctx.beginPath(); ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
+    ctx.strokeStyle = 'rgba(57, 255, 20, 0.3)'; ctx.stroke();
   });
 
-  // Physics Management & Rendering Engine for Marine Life Species[cite: 1]
+  // Aquatic species animation matrix[cite: 1]
   marineLife.forEach(m => {
-    // Shared Edge-loop bounds checker[cite: 1]
     if (m.vx) m.x += m.vx;
     if (m.vy) m.y += m.vy;
 
     if (m.vx > 0 && m.x > W + m.size * 2) m.x = -m.size * 2;
     if (m.vx < 0 && m.x < -m.size * 2) m.x = W + m.size * 2;
 
-    // Render by Object Type[cite: 1]
-    if (m.type === 'fish') {
-      m.y += Math.sin(T * 0.5 + m.phase) * 0.15;
-      m.y = Math.max(80, Math.min(H - 120, m.y));
-      drawExoticFish(m);
-    } 
+    if (m.type === 'fish') drawExoticFish(m);
     else if (m.type === 'jellyfish') {
       m.y -= m.vy * 0.4;
-      m.x += Math.sin(T * 0.2 + m.phase) * 0.15;
       if (m.y < -m.size * 3) { m.y = H + m.size * 2; m.x = Math.random() * W; }
-      drawExoticJelly(m);
-    } 
-    else if (m.type === 'manta') {
-      m.y += Math.sin(T * 0.3) * 0.1;
-      m.y = Math.max(60, Math.min(H * 0.7, m.y));
-      drawMantaRay(m);
-    } 
-    else if (m.type === 'turtle') {
-      m.y += Math.cos(T * 0.2) * 0.05;
-      m.y = Math.max(120, Math.min(H - 160, m.y));
-      drawSeaTurtle(m);
+      drawNeonJelly(m);
+    }
+    else if (m.type === 'manta') drawMantaRay(m);
+    else if (m.type === 'lionfish') {
+      m.y += Math.sin(T * 0.5 + m.phase) * 0.2;
+      drawLionfish(m);
+    }
+    else if (m.type === 'squid') {
+      m.x += Math.cos(T*0.2)*0.5;
+      if(m.x < -100) m.x = W + 100;
+      drawSquid(m);
     }
   });
 
@@ -428,59 +422,31 @@ function loop() {
   requestAnimationFrame(loop);
 }
 
-// ─── PORTFOLIO MINI SCENES GENERATOR ────────────────────────────────────[cite: 1]
-function drawPortfolioScene(id, palette, bgTop, bgBot) {
-  const c = document.getElementById(id);
-  if (!c) return;
+// ─── PORTFOLIO RENDERERS ─────────────────────────────────────────────────[cite: 1]
+function drawPortfolioScene(id, colors, bgT, bgB) {
+  const c = document.getElementById(id); if (!c) return;
   const rect = c.parentElement.getBoundingClientRect();
   c.width = rect.width || 360; c.height = rect.height || 200;
   const cx = c.getContext('2d');
-  let pT = 0;
   
-  const localFish = [];
-  for (let i = 0; i < 5; i++) {
-    localFish.push({
-      x: Math.random() * c.width, y: 30 + Math.random() * (c.height - 60),
-      vx: (0.4 + Math.random() * 0.6) * (Math.random() < 0.5 ? 1 : -1),
-      size: 8 + Math.random() * 8, primary: palette[i % palette.length], secondary: palette[(i+1) % palette.length]
-    });
+  function anim() {
+    cx.fillStyle = bgB; cx.fillRect(0, 0, c.width, c.height);
+    cx.shadowBlur = 15; cx.shadowColor = colors[0];
+    cx.fillStyle = colors[0];
+    cx.beginPath(); cx.arc(c.width*0.5 + Math.sin(T)*30, c.height*0.5, 12, 0, Math.PI*2); cx.fill();
+    cx.shadowBlur = 0;
+    requestAnimationFrame(anim);
   }
-
-  function render() {
-    cx.clearRect(0, 0, c.width, c.height);
-    let lGrad = cx.createLinearGradient(0, 0, 0, c.height);
-    lGrad.addColorStop(0, bgTop); lGrad.addColorStop(1, bgBot);
-    cx.fillStyle = lGrad; cx.fillRect(0, 0, c.width, c.height);
-
-    localFish.forEach(f => {
-      f.x += f.vx;
-      if (f.vx > 0 && f.x > c.width + 20) f.x = -20;
-      if (f.vx < 0 && f.x < -20) f.x = c.width + 20;
-
-      cx.save(); cx.translate(f.x, f.y); if (f.vx < 0) cx.scale(-1, 1);
-      let fG = cx.createRadialGradient(0,0,2,0,0,f.size);
-      fG.addColorStop(0, '#fff'); fG.addColorStop(0.4, f.primary); fG.addColorStop(1, f.primary);
-      cx.beginPath(); cx.ellipse(0, 0, f.size, f.size * 0.6, 0, 0, Math.PI * 2);
-      cx.fillStyle = fG; cx.fill();
-      cx.beginPath(); cx.moveTo(-f.size*0.5, 0);
-      cx.lineTo(-f.size*1.2, -f.size*0.4); cx.lineTo(-f.size*1.2, f.size*0.4);
-      cx.fillStyle = f.secondary; cx.fill(); cx.restore();
-    });
-    pT += 0.02;
-    requestAnimationFrame(render);
-  }
-  render();
+  anim();
 }
 
 window.addEventListener('load', () => {
   initAquarium();
   loop();
   setTimeout(() => {
-    drawPortfolioScene('p1', ['#ff7043','#ffd54f','#ff8f00','#ef9a9a'], '#081710', '#132916');
-    drawPortfolioScene('p2', ['#00e5ff','#80cbc4','#b3e5fc','#4dd0e1'], '#010d1a', '#041c38');
-    drawPortfolioScene('p3', ['#d500f9','#f48fb1','#80deea','#b39ddb'], '#10051c', '#22093b');
+    drawPortfolioScene('p1', ['#ff007f', '#fffb00'], '#050010', '#120024');
+    drawPortfolioScene('p2', ['#00f5d4', '#00b4d8'], '#000c14', '#001e33');
+    drawPortfolioScene('p3', ['#39ff14', '#fffb00'], '#020a00', '#0a1f00');
   }, 200);
 });
 </script>
-
-```
